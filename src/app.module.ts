@@ -4,7 +4,7 @@ import { QuestionService } from './module/question/question.service';
 // import { MongooseModule } from '@nestjs/mongoose';
 
 @Module({
-  // imports: [MongooseModule.forRoot('mongodb://localhost/account-service')],
+  // imports: [MongooseModule.forRoot('mongodb://localhost/question-service')],
   imports: [],
   controllers: [QuestionController],
   providers: [QuestionService],
