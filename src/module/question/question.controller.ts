@@ -1,13 +1,15 @@
 import { Controller } from '@nestjs/common';
+import { MessagePattern, Payload } from '@nestjs/microservices';
+
+import { CreateQuestionDTO } from './dtos/CreateQuestion.dto';
 import { QuestionService } from './question.service';
-import { MessagePattern } from '@nestjs/microservices';
 
 @Controller()
 export class QuestionController {
   constructor(private readonly questionController: QuestionService) {}
 
-  @MessagePattern('create')
-  create(): string {
-    return this.questionController.create();
+  @MessagePattern('createQuestion')
+  async create(@Payload() data: CreateQuestionDTO) {
+    return this.questionController.create(data);
   }
 }
