@@ -10,6 +10,8 @@ import {
 import { QuestionController } from './module/question/question.controller';
 import { QuestionService } from './module/question/question.service';
 import { Answer, AnswerSchema } from './module/question/schemas/answer.schema';
+import { AnswerController } from './module/question/answer.controller';
+import { AnswerService } from './module/question/answer.service';
 
 @Module({
   imports: [
@@ -20,7 +22,7 @@ import { Answer, AnswerSchema } from './module/question/schemas/answer.schema';
       { name: Answer.name, schema: AnswerSchema },
     ]),
   ],
-  controllers: [QuestionController],
-  providers: [QuestionService],
+  controllers: [QuestionController, AnswerController],
+  providers: [QuestionService, AnswerService],
 })
 export class QuestionModule {}

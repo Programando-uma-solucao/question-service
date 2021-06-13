@@ -19,7 +19,6 @@ export class Answer {
     required: true,
   })
   accountId: string;
-
 }
 
 export const AnswerSchema = SchemaFactory.createForClass(Answer);

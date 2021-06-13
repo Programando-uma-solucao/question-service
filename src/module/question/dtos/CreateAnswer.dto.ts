@@ -3,7 +3,7 @@ import { IsNotEmpty, IsString } from 'class-validator';
 export class CreateAnswerDTO {
   @IsString()
   @IsNotEmpty()
-  answer: string;  
+  answer: string;
 
   @IsString()
   @IsNotEmpty()
@@ -12,5 +12,4 @@ export class CreateAnswerDTO {
   @IsString()
   @IsNotEmpty()
   accountId: string;
-
 }
