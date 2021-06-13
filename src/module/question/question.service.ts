@@ -2,8 +2,10 @@ import { Inject, Injectable } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
+
 import { CipherServiceConfig } from 'src/config/microservices.config';
 import { CreateQuestionDTO } from './dtos/CreateQuestion.dto';
+import { RecoverQuestionsDTO } from './dtos/RecoverQuestions.dto';
 import { Question, QuestionDocument } from './schemas/question.schema';
 
 @Injectable()
@@ -29,5 +31,19 @@ export class QuestionService {
     const savedQuestion = await createdQuestion.save();
 
     return savedQuestion;
+  }
+
+  async recoverQuestions(data: RecoverQuestionsDTO) {
+    let questions: QuestionDocument[] = [];
+
+    if (data.role === 'COMMOM') {
+      questions = await this.questionModel.find({ accountId: data.id });
+    }
+
+    if (data.role === 'LAWYER') {
+      questions = await this.questionModel.find({ tags: { $in: data.tags } });
+    }
+
+    return questions;
   }
 }
