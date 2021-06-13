@@ -9,9 +9,9 @@ import {
 } from './module/question/schemas/question.schema';
 import { QuestionController } from './module/question/question.controller';
 import { QuestionService } from './module/question/question.service';
-import { Answer, AnswerSchema } from './module/question/schemas/answer.schema';
-import { AnswerController } from './module/question/answer.controller';
-import { AnswerService } from './module/question/answer.service';
+import { Answer, AnswerSchema } from './module/answer/schemas/answer.schema';
+import { AnswerController } from './module/answer/answer.controller';
+import { AnswerService } from './module/answer/answer.service';
 
 @Module({
   imports: [
