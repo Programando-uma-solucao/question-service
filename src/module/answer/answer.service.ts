@@ -2,8 +2,12 @@ import { Inject, Injectable } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
+
 import { CipherServiceConfig } from 'src/config/microservices.config';
-import { Question, QuestionDocument } from '../question/schemas/question.schema';
+import {
+  Question,
+  QuestionDocument,
+} from '../question/schemas/question.schema';
 import { CreateAnswerDTO } from './dtos/CreateAnswer.dto';
 import { Answer, AnswerDocument } from './schemas/answer.schema';
 
@@ -18,19 +22,22 @@ export class AnswerService {
 
   async create(data: CreateAnswerDTO) {
     const encrypted = await this.cipherService
-      .send('encryptOne', data['answer'])
+      .send('encryptOne', data.answer)
       .toPromise();
 
     const dataToSave = {
       answer: encrypted.data,
-      accountId: data.accountId,
+      lawyerId: data.lawyerId,
       questionId: data.questionId,
     };
 
     const createdAnswer = new this.answerModel(dataToSave);
-    await this.questionModel.updateOne({ _id : data.questionId },{ hasResponse : true });
-    const savedAnswer = await createdAnswer.save();
 
-    return savedAnswer;
+    await this.questionModel.updateOne(
+      { _id: data.questionId },
+      { hasResponse: true },
+    );
+
+    return createdAnswer.save();
   }
 }

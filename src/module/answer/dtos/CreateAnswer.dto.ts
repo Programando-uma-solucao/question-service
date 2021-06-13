@@ -11,5 +11,5 @@ export class CreateAnswerDTO {
 
   @IsString()
   @IsNotEmpty()
-  accountId: string;
+  lawyerId: string;
 }
