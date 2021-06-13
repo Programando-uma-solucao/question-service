@@ -9,6 +9,7 @@ import {
 } from './module/question/schemas/question.schema';
 import { QuestionController } from './module/question/question.controller';
 import { QuestionService } from './module/question/question.service';
+import { Answer, AnswerSchema } from './module/question/schemas/answer.schema';
 
 @Module({
   imports: [
@@ -16,6 +17,7 @@ import { QuestionService } from './module/question/question.service';
     MongooseModule.forRoot('mongodb://localhost/question-service'),
     MongooseModule.forFeature([
       { name: Question.name, schema: QuestionSchema },
+      { name: Answer.name, schema: AnswerSchema },
     ]),
   ],
   controllers: [QuestionController],
