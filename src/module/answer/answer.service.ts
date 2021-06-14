@@ -1,7 +1,7 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { ClientProxy } from '@nestjs/microservices';
+import { ClientProxy, RpcException } from '@nestjs/microservices';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
+import { Model, Types } from 'mongoose';
 
 import { CipherServiceConfig } from 'src/config/microservices.config';
 import {
@@ -39,5 +39,22 @@ export class AnswerService {
     );
 
     return createdAnswer.save();
+  }
+
+  async recoverAnswer(questionId: string) {
+    const answer = await this.answerModel
+      .findOne({
+        question: questionId,
+      })
+      .populate('question');
+
+    if (!answer) {
+      throw new RpcException({
+        message: 'Does not exist answer for this question yet',
+        httpCode: 404,
+      });
+    }
+
+    return answer;
   }
 }

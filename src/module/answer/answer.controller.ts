@@ -1,5 +1,5 @@
 import { Controller } from '@nestjs/common';
-import { EventPattern, Payload } from '@nestjs/microservices';
+import { EventPattern, MessagePattern, Payload } from '@nestjs/microservices';
 
 import { CreateAnswerDTO } from './dtos/CreateAnswer.dto';
 import { AnswerService } from './answer.service';
@@ -11,5 +11,10 @@ export class AnswerController {
   @EventPattern('createAnswer')
   async create(@Payload() data: CreateAnswerDTO) {
     this.answerService.create(data);
+  }
+
+  @MessagePattern('getAnswer')
+  async recoverAnswer(@Payload() questionId: string) {
+    return this.answerService.recoverAnswer(questionId);
   }
 }

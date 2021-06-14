@@ -1,8 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document, SchemaTypes } from 'mongoose';
 
-import { Question } from '../../question/schemas/question.schema';
-
 export type AnswerDocument = Answer & Document;
 
 @Schema()
@@ -12,7 +10,7 @@ export class Answer {
     type: SchemaTypes.ObjectId,
     ref: 'Question',
   })
-  questionId: Question;
+  question: string;
 
   @Prop({
     required: true,
