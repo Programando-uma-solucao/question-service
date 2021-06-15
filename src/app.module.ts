@@ -1,6 +1,7 @@
 import { ClientsModule } from '@nestjs/microservices';
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
+import { ConfigModule } from '@nestjs/config';
 
 import { CipherServiceConfig } from './config/microservices.config';
 import {
@@ -15,8 +16,11 @@ import { AnswerService } from './module/answer/answer.service';
 
 @Module({
   imports: [
+    ConfigModule.forRoot({
+      envFilePath: ['.env', '.development.env'],
+    }),
     ClientsModule.register([CipherServiceConfig]),
-    MongooseModule.forRoot('mongodb://localhost/question-service'),
+    MongooseModule.forRoot(process.env.MONGO_URL),
     MongooseModule.forFeature([
       { name: Question.name, schema: QuestionSchema },
       { name: Answer.name, schema: AnswerSchema },
