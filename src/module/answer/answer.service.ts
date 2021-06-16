@@ -28,7 +28,7 @@ export class AnswerService {
     const dataToSave = {
       answer: encrypted.data,
       lawyerId: data.lawyerId,
-      questionId: data.questionId,
+      question: data.questionId,
     };
 
     const createdAnswer = new this.answerModel(dataToSave);
