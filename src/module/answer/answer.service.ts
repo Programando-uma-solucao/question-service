@@ -21,6 +21,16 @@ export class AnswerService {
   ) {}
 
   async create(data: CreateAnswerDTO) {
+    const responseAlreadyExists = await this.answerModel.findOne({
+      question: data.questionId,
+    });
+
+    if (responseAlreadyExists)
+      throw new RpcException({
+        httpCode: 400,
+        message: 'There is already an answer to this question',
+      });
+
     const encrypted = await this.cipherService
       .send('encryptOne', data.answer)
       .toPromise();
@@ -28,7 +38,7 @@ export class AnswerService {
     const dataToSave = {
       answer: encrypted.data,
       lawyerId: data.lawyerId,
-      questionId: data.questionId,
+      question: data.questionId,
     };
 
     const createdAnswer = new this.answerModel(dataToSave);
