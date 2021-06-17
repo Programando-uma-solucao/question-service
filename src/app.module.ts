@@ -20,7 +20,11 @@ import { AnswerService } from './module/answer/answer.service';
       envFilePath: ['.env', '.development.env'],
     }),
     ClientsModule.register([CipherServiceConfig]),
-    MongooseModule.forRoot(process.env.MONGO_URL),
+    MongooseModule.forRoot(process.env.MONGO_URL, {
+      pass: process.env.MONGO_PASS,
+      user: process.env.MONGO_USER,
+      dbName: 'question-service',
+    }),
     MongooseModule.forFeature([
       { name: Question.name, schema: QuestionSchema },
       { name: Answer.name, schema: AnswerSchema },
