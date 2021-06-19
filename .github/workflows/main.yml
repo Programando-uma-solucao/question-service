@@ -46,3 +46,15 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           source: '.,!node_modules'
           target: '~/app/question-service'
+
+      - name: Running scripts on server
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          port: ${{ secrets.SSH_PORT }}
+          key: ${{ secrets.SSH_KEY }}
+          script: |
+            cd ~/app/question-service
+            npm install
+            pm2 restart question_service
